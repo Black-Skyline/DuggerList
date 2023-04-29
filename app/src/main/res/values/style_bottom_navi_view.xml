@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="bottom_navi_default_style">
+        <!-- 图标和文字的颜色样式,用选择器写控制 state_checked 属性即可 -->
+        <item name="itemIconTint">@color/selector_default_item_color</item>
+        <item name="itemTextColor">@color/selector_default_item_color</item>
+        <!-- 触碰时水波纹效果, 这里的selector设置点击浅灰色，长按深灰色，若要去除水波纹 @null -->
+        <item name="itemRippleColor">@color/selector_hold_item_color</item>
+        <!-- 控制选中和未选中时的字体样式（大小和颜色等）, 系统默认一个12sp一个14sp产生有字体缩放的效果,给一个大小就好了 -->
+        <item name="itemTextAppearanceActive">@style/BottomNavigationItemViewTextActive</item>
+        <item name="itemTextAppearanceInactive">@style/BottomNavigationItemViewTextInactive</item>
+        <!-- 设置item的文字可见性模式, labeled为一直显示, selected为选定显示, auto为自动, unlabeled为不显示-->
+        <item name="labelVisibilityMode">labeled</item>
+        <!-- 设置item与容器的间距-->
+        <item name="itemPaddingTop">@dimen/padding_8</item>
+        <item name="itemPaddingBottom">@dimen/padding_10</item>
+        <!--  bottomNavigationView的背景色-->
+        <item name="android:background">"@color/design_default_color_on_primary"</item>dimens.xml
+    </style>
+
+    <style name="BottomNavigationItemViewTextInactive">
+        <item name="android:textSize">@dimen/font_11</item>
+    </style>
+
+    <style name="BottomNavigationItemViewTextActive">
+        <item name="android:textSize">@dimen/font_16</item>
+    </style>
+</resources>
+
