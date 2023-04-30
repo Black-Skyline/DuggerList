@@ -12,6 +12,12 @@
         <activity
             android:name=".activities.GateActivity"
             android:exported="true">
+
+        </activity>
+
+        <activity
+            android:name=".activities.EntranceActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

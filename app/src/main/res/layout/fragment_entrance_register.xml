@@ -1,254 +1,252 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline10"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.49" />
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.todolist.viewmodels.AccountDataViewModel" />
+    </data>
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.36" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.46" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.33" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.23" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.05" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.5" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.95" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/regis_text_1"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:paddingStart="15dp"
-        android:paddingEnd="25dp"
-        android:textColorHint="@color/black"
-        app:counterEnabled="true"
-        app:counterMaxLength="@integer/user_name_Max_length"
-        app:counterTextColor="@color/blue_purple"
-        app:errorEnabled="true"
-        app:helperText="@string/regis_account_hint"
-        app:helperTextEnabled="true"
-        app:helperTextTextColor="@color/material_dynamic_neutral50"
-        app:hintEnabled="true"
-        app:hintTextAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintBottom_toTopOf="@+id/guideline2"
-        app:layout_constraintEnd_toStartOf="@+id/guideline8"
-        app:layout_constraintStart_toStartOf="@+id/guideline7"
-        app:layout_constraintTop_toTopOf="@+id/guideline3">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/regis_user_name_box"
-            android:layout_width="match_parent"
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline10"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_translucent_rounded_corners_box"
-            android:drawableStart="@drawable/ic_user_name_input_24"
-            android:drawablePadding="5dp"
-            android:drawableTintMode="multiply"
-            android:hint="@string/user_name"
-            android:imeOptions="actionNext"
-            android:inputType="text"
-            android:paddingVertical="15dp"
-            android:text="@={userData.user_name}"
-            tools:targetApi="m" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.49" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/regis_text_2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:paddingStart="15dp"
-        android:paddingEnd="25dp"
-        android:textColorHint="@color/black"
-        app:counterEnabled="true"
-        app:counterMaxLength="@integer/password_Max_length"
-        app:counterTextColor="@color/blue_purple"
-        app:errorEnabled="true"
-        app:errorTextAppearance="@style/Theme.TODOList"
-        app:helperTextTextColor="@color/material_dynamic_neutral30"
-        app:hintEnabled="true"
-        app:hintTextAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintBottom_toTopOf="@+id/guideline5"
-        app:layout_constraintEnd_toStartOf="@+id/guideline8"
-        app:layout_constraintStart_toStartOf="@+id/guideline7"
-        app:layout_constraintTop_toTopOf="@+id/guideline4"
-        app:passwordToggleDrawable="@drawable/ic_password_lock_opened_24"
-        app:passwordToggleTint="#14CAAF"
-        app:passwordToggleTintMode="multiply">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/regis_passwd_box"
-            android:layout_width="match_parent"
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline4"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_translucent_rounded_corners_box"
-            android:drawableStart="@drawable/ic_password_locked_24"
-            android:drawablePadding="5dp"
-            android:drawableTintMode="multiply"
-            android:hint="@string/password"
-            android:imeOptions="actionDone"
-            android:includeFontPadding="false"
-            android:inputType="textPassword"
-            android:maxLines="1"
-            android:paddingVertical="15dp"
-            android:text="@={userData.password}"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.36" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.46" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.33" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.23" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.05" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.95" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/regis_text_1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:paddingStart="15dp"
+            android:paddingEnd="25dp"
             android:textColorHint="@color/black"
-            tools:targetApi="m" />
-    </com.google.android.material.textfield.TextInputLayout>
+            app:counterEnabled="true"
+            app:counterMaxLength="@integer/user_name_Max_length"
+            app:counterTextColor="@color/blue_purple"
+            app:errorEnabled="true"
+            app:helperText="@string/regis_account_hint"
+            app:helperTextEnabled="true"
+            app:helperTextTextColor="@color/material_dynamic_neutral50"
+            app:hintEnabled="true"
+            app:hintTextAppearance="@style/TextAppearance.AppCompat.Medium"
+            app:layout_constraintBottom_toTopOf="@+id/guideline2"
+            app:layout_constraintEnd_toStartOf="@+id/guideline8"
+            app:layout_constraintStart_toStartOf="@+id/guideline7"
+            app:layout_constraintTop_toTopOf="@+id/guideline3">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/regis_text_3"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:paddingStart="15dp"
-        android:paddingEnd="25dp"
-        android:textColorHint="@color/black"
-        app:counterEnabled="true"
-        app:counterMaxLength="@integer/password_Max_length"
-        app:counterTextColor="@color/blue_purple"
-        app:errorEnabled="true"
-        app:errorTextAppearance="@style/Theme.TODOList"
-        app:helperTextTextColor="@color/material_dynamic_neutral30"
-        app:hintEnabled="true"
-        app:hintTextAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintBottom_toTopOf="@+id/guideline11"
-        app:layout_constraintEnd_toStartOf="@+id/guideline8"
-        app:layout_constraintStart_toStartOf="@+id/guideline7"
-        app:layout_constraintTop_toTopOf="@+id/guideline10"
-        app:passwordToggleDrawable="@drawable/ic_password_lock_opened_24"
-        app:passwordToggleTint="#14CAAF"
-        app:passwordToggleTintMode="multiply">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/regis_Account_box"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_translucent_rounded_corners_box"
+                android:drawableStart="@drawable/ic_account_input_24"
+                android:drawablePadding="5dp"
+                android:drawableTintMode="multiply"
+                android:hint="@string/user_name"
+                android:imeOptions="actionNext"
+                android:inputType="text"
+                android:paddingVertical="15dp"
+                android:text="@={viewModel.registerAccount}"
+                tools:targetApi="m" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/confirm_passwd_box"
-            android:layout_width="match_parent"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/regis_text_2"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_translucent_rounded_corners_box"
-            android:drawableStart="@drawable/ic_password_locked_24"
-            android:drawablePadding="5dp"
-            android:drawableTintMode="multiply"
-            android:hint="@string/confirm_passwd"
-            android:imeOptions="actionDone"
-            android:includeFontPadding="false"
-            android:inputType="textPassword"
-            android:maxLines="1"
-            android:paddingVertical="15dp"
-            android:text="@={userData.re_passwd}"
+            android:paddingStart="15dp"
+            android:paddingEnd="25dp"
             android:textColorHint="@color/black"
-            tools:targetApi="m" />
-    </com.google.android.material.textfield.TextInputLayout>
+            app:counterEnabled="true"
+            app:counterMaxLength="@integer/password_Max_length"
+            app:counterTextColor="@color/blue_purple"
+            app:errorEnabled="true"
+            app:errorTextAppearance="@style/Theme.TODOList"
+            app:helperTextTextColor="@color/material_dynamic_neutral30"
+            app:hintEnabled="true"
+            app:hintTextAppearance="@style/TextAppearance.AppCompat.Medium"
+            app:layout_constraintBottom_toTopOf="@+id/guideline5"
+            app:layout_constraintEnd_toStartOf="@+id/guideline8"
+            app:layout_constraintStart_toStartOf="@+id/guideline7"
+            app:layout_constraintTop_toTopOf="@+id/guideline4"
+            app:passwordToggleDrawable="@drawable/ic_password_lock_opened_24"
+            app:passwordToggleTint="#14CAAF"
+            app:passwordToggleTintMode="multiply">
 
-    <TextView
-        android:id="@+id/login_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/Register_title"
-        android:textColor="@color/cardview_dark_background"
-        android:textColorHighlight="@color/cardview_light_background"
-        android:textSize="40sp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline3"
-        app:layout_constraintEnd_toStartOf="@+id/guideline8"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="@+id/guideline7"
-        app:layout_constraintTop_toTopOf="@+id/guideline9"
-        app:layout_constraintVertical_bias="0.721" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/regis_passwd_box"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_translucent_rounded_corners_box"
+                android:drawableStart="@drawable/ic_password_locked_24"
+                android:drawablePadding="5dp"
+                android:drawableTintMode="multiply"
+                android:hint="@string/password"
+                android:imeOptions="actionDone"
+                android:includeFontPadding="false"
+                android:inputType="textPassword"
+                android:maxLines="1"
+                android:paddingVertical="15dp"
+                android:text="@={viewModel.registerPassword}"
+                android:textColorHint="@color/black"
+                tools:targetApi="m" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.05" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/regis_text_3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingStart="15dp"
+            android:paddingEnd="25dp"
+            android:textColorHint="@color/black"
+            app:counterEnabled="true"
+            app:counterMaxLength="@integer/password_Max_length"
+            app:counterTextColor="@color/blue_purple"
+            app:errorEnabled="true"
+            app:errorTextAppearance="@style/Theme.TODOList"
+            app:helperTextTextColor="@color/material_dynamic_neutral30"
+            app:hintEnabled="true"
+            app:hintTextAppearance="@style/TextAppearance.AppCompat.Medium"
+            app:layout_constraintBottom_toTopOf="@+id/guideline11"
+            app:layout_constraintEnd_toStartOf="@+id/guideline8"
+            app:layout_constraintStart_toStartOf="@+id/guideline7"
+            app:layout_constraintTop_toTopOf="@+id/guideline10"
+            app:passwordToggleDrawable="@drawable/ic_password_lock_opened_24"
+            app:passwordToggleTint="#14CAAF"
+            app:passwordToggleTintMode="multiply">
 
-    <Button
-        android:id="@+id/confirm_register"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bg_round_corner_btn"
-        android:onClick="@{dataControl::userClicked}"
-        android:text="@string/confirm_register"
-        android:textColor="#98980E"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/guideline8"
-        app:layout_constraintHorizontal_bias="0.35"
-        app:layout_constraintStart_toStartOf="@+id/guideline6"
-        app:layout_constraintTop_toTopOf="@+id/guideline11" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/confirm_passwd_box"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_translucent_rounded_corners_box"
+                android:drawableStart="@drawable/ic_password_locked_24"
+                android:drawablePadding="5dp"
+                android:drawableTintMode="multiply"
+                android:hint="@string/confirm_passwd"
+                android:imeOptions="actionDone"
+                android:includeFontPadding="false"
+                android:inputType="textPassword"
+                android:maxLines="1"
+                android:paddingVertical="15dp"
+                android:text="@={viewModel.confirmPassword}"
+                android:textColorHint="@color/black"
+                tools:targetApi="m" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
-        android:id="@+id/back_login_page"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bg_round_corner_btn"
-        android:onClick="@{dataControl::userClicked}"
-        android:text="@string/back_login_page"
-        android:textColor="#98980E"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/guideline6"
-        app:layout_constraintHorizontal_bias="0.536"
-        app:layout_constraintStart_toStartOf="@+id/guideline7"
-        app:layout_constraintTop_toTopOf="@+id/guideline11" />
+        <TextView
+            android:id="@+id/login_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Register_title"
+            android:textColor="@color/cardview_dark_background"
+            android:textColorHighlight="@color/cardview_light_background"
+            android:textSize="40sp"
+            app:layout_constraintBottom_toTopOf="@+id/guideline3"
+            app:layout_constraintEnd_toStartOf="@+id/guideline8"
+            app:layout_constraintHorizontal_bias="0.496"
+            app:layout_constraintStart_toStartOf="@+id/guideline7"
+            app:layout_constraintTop_toTopOf="@+id/guideline9"
+            app:layout_constraintVertical_bias="0.721" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline11"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.59" />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.05" />
 
-    <TextView
-        android:id="@+id/show"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@{userData.user_name}"
-        app:layout_constraintBottom_toTopOf="@+id/login_text"
-        app:layout_constraintEnd_toStartOf="@+id/guideline8"
-        app:layout_constraintStart_toStartOf="@+id/guideline7"
-        app:layout_constraintTop_toTopOf="@+id/guideline9" />
+        <Button
+            android:id="@+id/confirm_register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_round_corner_btn"
+            android:onClick="@{viewModel::userClicked}"
+            android:text="@string/confirm_register"
+            android:textColor="#98980E"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guideline8"
+            app:layout_constraintHorizontal_bias="0.35"
+            app:layout_constraintStart_toStartOf="@+id/guideline6"
+            app:layout_constraintTop_toTopOf="@+id/guideline11" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <Button
+            android:id="@+id/back_login_page"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_round_corner_btn"
+            android:text="@string/back_login_page"
+            android:textColor="#98980E"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guideline6"
+            app:layout_constraintHorizontal_bias="0.536"
+            app:layout_constraintStart_toStartOf="@+id/guideline7"
+            app:layout_constraintTop_toTopOf="@+id/guideline11" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.59" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
