@@ -2,7 +2,7 @@ package com.example.todolist.activities
 
 import android.os.Bundle
 import com.example.todolist.R
-import com.example.todolist.fragments.LoginFragment
+import com.example.todolist.fragments.entrance.LoginFragment
 
 /**
  * @author: workDog
@@ -20,7 +20,6 @@ class EntranceActivity : BaseActivity() {
             supportFragmentManager
                 .beginTransaction()
                 .add(R.id.entrance_fragment_place, LoginFragment(), "登录fragment实例")
-                .addToBackStack(BACK_STACK_ROOT_TAG)
                 .commit()
     }
 

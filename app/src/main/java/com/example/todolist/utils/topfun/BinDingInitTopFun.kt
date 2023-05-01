@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
-import androidx.viewbinding.ViewBinding
 import java.lang.reflect.ParameterizedType
 
 // 在Activity使用反射调用inflate方法完成DataBinding
@@ -38,8 +37,15 @@ inline fun <VB : ViewDataBinding> Fragment.getViewBinding(
 // 有考虑在Fragment使用反射调用setContentView（getActivity(), LayoutResID）方法完成DataBinding, 原理同上
 
 
-//
-fun <T : Activity> Fragment.actionToActNoParam(context: Context, destination: Class<T>) {
+// 从fragment到Activity的无参跳转
+fun <T : Activity> Fragment.actionToActivityNoParam(context: Context, destination: Class<T>) {
     val intent = Intent(context, destination)
+    context.startActivity(intent)
+}
+
+// 从fragment到Activity的无参跳转
+fun <T : Activity> Fragment.actionToActivityDoSth(context: Context, destination: Class<T>, beforeAction: () -> Unit) {
+    val intent = Intent(context, destination)
+    beforeAction()
     context.startActivity(intent)
 }

@@ -1,4 +1,4 @@
-package com.example.todolist.fragments
+package com.example.todolist.fragments.entrance
 
 import android.os.Bundle
 import android.text.Editable
@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.SavedStateViewModelFactory
 import androidx.lifecycle.ViewModelProvider
 import com.example.todolist.R
-import com.example.todolist.activities.EntranceActivity
 import com.example.todolist.databinding.FragmentEntranceRegisterBinding
 import com.example.todolist.utils.BaseTextChangedWatcher
 import com.example.todolist.viewmodels.AccountDataViewModel
@@ -33,35 +32,30 @@ class RegisterFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_entrance_register, container, false)
+        _binding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_entrance_register, container, false)
         AccountDataViewModel.initInstance(viewModel)
-        mBinding.viewModel = this.viewModel
-        mBinding.lifecycleOwner = this
-        mBinding.backLoginPage.setOnClickListener {
-            this@RegisterFragment.viewModel.clearLiveData()
-            val manager = requireActivity().supportFragmentManager
-            val transaction = manager.beginTransaction()
+        mBinding.apply {
+            vm = viewModel
+            user = viewModel.getDatas()
+            lifecycleOwner = this@RegisterFragment
+            mBinding.backLoginPage.setOnClickListener {
+                this@RegisterFragment.viewModel.clearLiveData()
+                val manager = requireActivity().supportFragmentManager
+                val transaction = manager.beginTransaction()
 
-            transaction.apply {
-                remove(this@RegisterFragment)
-            }
-            val last = manager.findFragmentByTag("登录fragment实例")?.apply {
-                transaction.show(this@apply)
-            }
-            transaction.apply {
-                addToBackStack(EntranceActivity.BACK_STACK_ROOT_TAG)
-                commit()
+                transaction.apply {
+                    remove(this@RegisterFragment)
+                    manager.findFragmentByTag("登录fragment实例")?.let { it1 -> show(it1) }
+                    commit()
+                }
             }
         }
         textChangedListen()
         return mBinding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-    }
-
+//    下面是对DataBinding的封装后在fragment中的简单写法
 //    override fun FragmentEntranceRegisterBinding.initBinding() {
 //        AccountDataViewModel.initInstance(this@RegisterFragment.viewModel)
 //        mBinding.viewModel = this@RegisterFragment.viewModel

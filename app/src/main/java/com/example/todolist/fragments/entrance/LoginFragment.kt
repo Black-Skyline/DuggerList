@@ -1,4 +1,6 @@
-package com.example.todolist.fragments
+package com.example.todolist.fragments.entrance
+
+//import com.example.todolist.utils.actionToActNoParam
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -12,12 +14,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.SavedStateViewModelFactory
 import androidx.lifecycle.ViewModelProvider
 import com.example.todolist.R
-import com.example.todolist.activities.EntranceActivity
 import com.example.todolist.activities.GateActivity
 import com.example.todolist.databinding.FragmentEntranceLoginBinding
 import com.example.todolist.utils.BaseTextChangedWatcher
-import com.example.todolist.utils.actionToActNoParam
-
+import com.example.todolist.utils.actionToActivityDoSth
 import com.example.todolist.viewmodels.AccountDataViewModel
 import com.google.android.material.textfield.TextInputLayout
 
@@ -29,34 +29,39 @@ class LoginFragment : Fragment(), View.OnClickListener {
             SavedStateViewModelFactory(requireActivity().application, this)
         )[AccountDataViewModel::class.java]
     }
-    private lateinit var _binding: FragmentEntranceLoginBinding
+    private var _binding: FragmentEntranceLoginBinding? = null
     private val mBinding: FragmentEntranceLoginBinding
-        get() = _binding
+        get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_entrance_login, container, false)
-            AccountDataViewModel.initInstance(this@LoginFragment.viewModel)
-        mBinding.viewModel = this@LoginFragment.viewModel
-        mBinding.lifecycleOwner = this@LoginFragment
-        mBinding.login.setOnClickListener(this@LoginFragment)
-        mBinding.register.setOnClickListener(this@LoginFragment)
-        mBinding.inputText1.isCounterEnabled = false
-        mBinding.inputText1.isCounterEnabled = false
+        _binding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_entrance_login, container, false)
+        AccountDataViewModel.initInstance(this@LoginFragment.viewModel)
+        mBinding.apply {
+            vm = this@LoginFragment.viewModel
+            user = viewModel.getDatas()
+            lifecycleOwner = this@LoginFragment
+            login.setOnClickListener(this@LoginFragment)
+            register.setOnClickListener(this@LoginFragment)
+            inputText1.isCounterEnabled = false
+            inputText1.isCounterEnabled = false
+        }
+//        mBinding.vm = this@LoginFragment.viewModel
+//        mBinding.lifecycleOwner = this@LoginFragment
+//        mBinding.login.setOnClickListener(this@LoginFragment)
+//        mBinding.register.setOnClickListener(this@LoginFragment)
+//        mBinding.inputText1.isCounterEnabled = false
+//        mBinding.inputText1.isCounterEnabled = false
         textChangedListen()
         this@LoginFragment.viewModel.checkIsRememberPasswd()
         return mBinding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-//        AccountDataViewModel.initInstance(viewModel)
-
-    }
-
+//    下面是对DataBinding的封装后在fragment中的简单写法
 //    override fun FragmentEntranceLoginBinding.initBinding() {
 //        AccountDataViewModel.initInstance(this@LoginFragment.viewModel)
 //        mBinding.viewModel = this@LoginFragment.viewModel
@@ -68,6 +73,12 @@ class LoginFragment : Fragment(), View.OnClickListener {
 //        textChangedListen()
 //        this@LoginFragment.viewModel.checkIsRememberPasswd()
 //    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        // 假如onDestroyView回调时mBinding已经调用set方法完成了初始化，就解除绑定
+        _binding = null
+    }
 
     private fun textChangedListen() {
         mBinding.accountBox.addTextChangedListener()
@@ -133,14 +144,20 @@ class LoginFragment : Fragment(), View.OnClickListener {
             R.id.login -> {
                 if (viewModel.loginCheck()) {
                     viewModel.updateShp(AccountDataViewModel.getIsRememberPasswdKey())
-                    actionToActNoParam(requireActivity(), GateActivity::class.java)
+                    actionToActivityDoSth(requireActivity(), GateActivity::class.java) {
+//                        // 展示过度动画
+                    }
+                    val manager = requireActivity().supportFragmentManager
+                    manager.findFragmentByTag("登录fragment实例")?.apply {
+                        manager.beginTransaction().remove(this).commit()
+                        requireActivity().finish()
+                    }
                 }
             }
             R.id.register -> {
                 requireActivity().supportFragmentManager.beginTransaction().apply {
                     hide(this@LoginFragment)
                     add(R.id.entrance_fragment_place, RegisterFragment(), "注册fragment实例")
-                    addToBackStack(EntranceActivity.BACK_STACK_ROOT_TAG)
                     commit()
                 }
             }

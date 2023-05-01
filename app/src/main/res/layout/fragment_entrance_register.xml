@@ -5,7 +5,10 @@
 
     <data>
         <variable
-            name="viewModel"
+            name="user"
+            type="com.example.todolist.databeans.user.AccountData" />
+        <variable
+            name="vm"
             type="com.example.todolist.viewmodels.AccountDataViewModel" />
     </data>
 
@@ -104,7 +107,7 @@
                 android:imeOptions="actionNext"
                 android:inputType="text"
                 android:paddingVertical="15dp"
-                android:text="@={viewModel.registerAccount}"
+                android:text="@={user.registerAccount}"
                 tools:targetApi="m" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -145,7 +148,7 @@
                 android:inputType="textPassword"
                 android:maxLines="1"
                 android:paddingVertical="15dp"
-                android:text="@={viewModel.registerPassword}"
+                android:text="@={user.registerPasswd}"
                 android:textColorHint="@color/black"
                 tools:targetApi="m" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -187,7 +190,7 @@
                 android:inputType="textPassword"
                 android:maxLines="1"
                 android:paddingVertical="15dp"
-                android:text="@={viewModel.confirmPassword}"
+                android:text="@={user.confirmPasswd}"
                 android:textColorHint="@color/black"
                 tools:targetApi="m" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -219,7 +222,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/bg_round_corner_btn"
-            android:onClick="@{viewModel::userClicked}"
+            android:onClick="@{vm::userClicked}"
             android:text="@string/confirm_register"
             android:textColor="#98980E"
             app:layout_constraintBottom_toBottomOf="parent"

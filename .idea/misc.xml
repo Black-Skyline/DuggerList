@@ -3,24 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/AndroidProjectFile/TODOList/app/src/main/res/drawable/bg_translucent_rounded_corners_box.xml" value="0.1845" />
-        <entry key="..\:/AndroidProjectFile/TODOList/app/src/main/res/drawable/check_box_style.xml" value="0.1845" />
-        <entry key="..\:/AndroidProjectFile/TODOList/app/src/main/res/drawable/ic_checked_circle_24.xml" value="0.1845" />
-        <entry key="..\:/AndroidProjectFile/TODOList/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1845" />
-        <entry key="..\:/AndroidProjectFile/TODOList/app/src/main/res/drawable/ic_no_checked_circle_24.xml" value="0.1845" />
-        <entry key="..\:/AndroidProjectFile/TODOList/app/src/main/res/drawable/ic_password_lock_opened_24.xml" value="0.1845" />
-        <entry key="..\:/AndroidProjectFile/TODOList/app/src/main/res/drawable/ic_password_locked_24.xml" value="0.1845" />
-        <entry key="..\:/AndroidProjectFile/TODOList/app/src/main/res/drawable/ic_user_name_input_24.xml" value="0.1845" />
-        <entry key="..\:/AndroidProjectFile/TODOList/app/src/main/res/layout/activity_entrance.xml" value="0.3307291666666667" />
-        <entry key="..\:/AndroidProjectFile/TODOList/app/src/main/res/layout/activity_gate.xml" value="0.33" />
-        <entry key="..\:/AndroidProjectFile/TODOList/app/src/main/res/layout/fragment_calendar_manage.xml" value="0.2015625" />
-        <entry key="..\:/AndroidProjectFile/TODOList/app/src/main/res/layout/fragment_custom_setting.xml" value="0.3283514492753623" />
-        <entry key="..\:/AndroidProjectFile/TODOList/app/src/main/res/layout/fragment_entrance_login.xml" value="0.3307291666666667" />
-        <entry key="..\:/AndroidProjectFile/TODOList/app/src/main/res/layout/fragment_entrance_register.xml" value="0.33" />
-        <entry key="..\:/AndroidProjectFile/TODOList/app/src/main/res/layout/fragment_setting.xml" value="0.3283514492753623" />
-        <entry key="..\:/AndroidProjectFile/TODOList/app/src/main/res/layout/fragment_simple_search.xml" value="0.2015625" />
-        <entry key="..\:/AndroidProjectFile/TODOList/app/src/main/res/layout/fragment_task_display.xml" value="0.25" />
-        <entry key="..\:/AndroidProjectFile/TODOList/app/src/main/res/menu/menu_gata_bottom_navigation.xml" value="0.3307291666666667" />
+        <entry key="..\:/AndroidProjectFile/TODOList/app/src/main/res/layout/frag_layout_entrance_login.xml" value="0.1" />
+        <entry key="..\:/AndroidProjectFile/TODOList/app/src/main/res/layout/fragment_custom_setting.xml" value="0.2015625" />
+        <entry key="..\:/AndroidProjectFile/TODOList/app/src/main/res/layout/fragment_entrance_login.xml" value="0.1" />
+        <entry key="..\:/AndroidProjectFile/TODOList/app/src/main/res/layout/fragment_entrance_register.xml" value="0.5" />
       </map>
     </option>
   </component>
