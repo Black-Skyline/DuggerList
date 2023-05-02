@@ -23,12 +23,13 @@ class EntranceActivity : BaseActivity() {
                 .commit()
     }
 
-    override fun onBackPressed() {
-        if (supportFragmentManager.backStackEntryCount > 0) {
-            // 出栈下一个 Fragment，并显示出来
-            supportFragmentManager.popBackStackImmediate()
-        } else {
-            super.onBackPressed()
-        }
-    }
+    // 这种写法被废弃了
+//    override fun onBackPressed() {
+//        if (supportFragmentManager.backStackEntryCount > 0) {
+//            // 出栈下一个 Fragment，并显示出来
+//            supportFragmentManager.popBackStackImmediate()
+//        } else {
+//            super.onBackPressed()
+//        }
+//    }
 }

@@ -9,10 +9,10 @@ import com.example.todolist.R
 import com.example.todolist.adapters.GateVpFragmentAdapter
 import com.example.todolist.adapters.LazyCreateFragment
 import com.example.todolist.databinding.ActivityGateBinding
-import com.example.todolist.fragments.CalendarManageFragment
-import com.example.todolist.fragments.CustomSettingFragment
-import com.example.todolist.fragments.SimpleSearchFragment
-import com.example.todolist.fragments.TaskDisplayFragment
+import com.example.todolist.fragments.gate.CalendarManageFragment
+import com.example.todolist.fragments.gate.CustomSettingFragment
+import com.example.todolist.fragments.gate.SimpleSearchFragment
+import com.example.todolist.fragments.gate.TaskDisplayFragment
 import com.example.todolist.viewmodels.GateViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 

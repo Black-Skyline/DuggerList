@@ -13,18 +13,18 @@
         <!-- 设置item的文字可见性模式, labeled为一直显示, selected为选定显示, auto为自动, unlabeled为不显示-->
         <item name="labelVisibilityMode">labeled</item>
         <!-- 设置item与容器的间距-->
-        <item name="itemPaddingTop">@dimen/padding_8</item>
-        <item name="itemPaddingBottom">@dimen/padding_10</item>
+        <item name="itemPaddingTop">@dimen/dp_size_8</item>
+        <item name="itemPaddingBottom">@dimen/dp_size_10</item>
         <!--  bottomNavigationView的背景色-->
         <item name="android:background">"@color/design_default_color_on_primary"</item>dimens.xml
     </style>
 
     <style name="BottomNavigationItemViewTextInactive">
-        <item name="android:textSize">@dimen/font_11</item>
+        <item name="android:textSize">@dimen/sp_size_11</item>
     </style>
 
     <style name="BottomNavigationItemViewTextActive">
-        <item name="android:textSize">@dimen/font_16</item>
+        <item name="android:textSize">@dimen/sp_size_16</item>
     </style>
 </resources>
 

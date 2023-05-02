@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".activities.GateActivity">
 
-
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/gate_fragments_vp"
         android:layout_width="match_parent"
@@ -14,25 +13,25 @@
         app:layout_constraintBottom_toTopOf="@+id/gate_bottom_navi"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" >
+
+    </androidx.viewpager2.widget.ViewPager2>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_more_action"
+        android:id="@+id/fab_add_more"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="36dp"
-        android:clickable="true"
         app:maxImageSize="70dp"
-        android:contentDescription="更多操作"
-        android:elevation="@dimen/padding_5"
+        android:elevation="@dimen/dp_size_5"
         android:focusable="true"
         android:src="@drawable/icon_fab_more_action"
         app:fabCustomSize="70dp"
         app:layout_constraintBottom_toTopOf="@+id/gate_bottom_navi"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
-        app:pressedTranslationZ="@dimen/padding_10" />
+        app:pressedTranslationZ="@dimen/dp_size_18" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/gate_bottom_navi"

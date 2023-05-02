@@ -3,10 +3,18 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/AndroidProjectFile/TODOList/app/src/main/res/drawable/icon_state_expanding_more.xml" value="0.251" />
+        <entry key="..\:/AndroidProjectFile/TODOList/app/src/main/res/drawable/icon_state_list_pack_up.xml" value="0.251" />
+        <entry key="..\:/AndroidProjectFile/TODOList/app/src/main/res/drawable/selector_list_state_display.xml" value="0.251" />
+        <entry key="..\:/AndroidProjectFile/TODOList/app/src/main/res/layout/activity_gate.xml" value="0.20652173913043478" />
         <entry key="..\:/AndroidProjectFile/TODOList/app/src/main/res/layout/frag_layout_entrance_login.xml" value="0.1" />
+        <entry key="..\:/AndroidProjectFile/TODOList/app/src/main/res/layout/fragment_calendar_manage.xml" value="0.18931159420289856" />
         <entry key="..\:/AndroidProjectFile/TODOList/app/src/main/res/layout/fragment_custom_setting.xml" value="0.2015625" />
         <entry key="..\:/AndroidProjectFile/TODOList/app/src/main/res/layout/fragment_entrance_login.xml" value="0.1" />
         <entry key="..\:/AndroidProjectFile/TODOList/app/src/main/res/layout/fragment_entrance_register.xml" value="0.5" />
+        <entry key="..\:/AndroidProjectFile/TODOList/app/src/main/res/layout/fragment_task_display.xml" value="0.20652173913043478" />
+        <entry key="..\:/AndroidProjectFile/TODOList/app/src/main/res/layout/test_child.xml" value="0.31875" />
+        <entry key="..\:/AndroidProjectFile/TODOList/app/src/main/res/layout/test_parent.xml" value="0.75" />
       </map>
     </option>
   </component>
