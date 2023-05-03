@@ -1,5 +1,6 @@
 package com.example.todolist.model.entity
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import kotlin.time.ExperimentalTime
@@ -24,14 +25,22 @@ import kotlin.time.ExperimentalTime
 @Entity(tableName = "RootTasks")
 data class RootTaskData(
     @PrimaryKey(autoGenerate = true)
-    val id: Long? = null,
-    var title: String = "",             // 标题
-    var description: String = "",       // 描述
-    var tag: String? = null,            // 标签 预留后续实现
-    var priority: String? = null,       // 优先级 预留后续实现
-    var isFinished: Boolean = false,    // 是否完成
-    var setupTime: String? = null ,     // 设定的目标时间
-    var category: String = "default",   // 类别 不同的list中
-    var parent: String = " this",       // 任务所属的父任务, " this"表示自己就是父任务
-    var taskGroup: String? = null,      // 任务分组 预留后续实现
+    var id: Long = 0,                          // using
+    @ColumnInfo(name = "title")
+    var title: String = "默认任务",             // 标题   using
+    @ColumnInfo(name = "description")
+    var description: String = "无描述",        // 描述   using
+    @ColumnInfo(name = "tag")
+    var tag: String = "无标签",                // 标签 预留后续实现
+    @ColumnInfo(name = "priority")
+    var priority: Int = 0,                    // 优先级 预留后续实现
+    @ColumnInfo(name = "isFinished")
+    var isFinished: Boolean = false,          // 是否已完成   using
+//    var setupTime: String = "" ,            // 设定的目标时间  预留后续实现
+    @ColumnInfo(name = "category")
+    var category: String = "default",         // 类别 不同的list中 预留后续实现
+    @ColumnInfo(name = "parentId")
+    var parent: Long = -1,                    // 父任务id归属, -1代表自己是父任务,其他正数连接到对应id  using
+    @ColumnInfo(name = "taskGroup")
+    var taskGroup: String = "未分组",          // 任务分组 预留后续实现
 )

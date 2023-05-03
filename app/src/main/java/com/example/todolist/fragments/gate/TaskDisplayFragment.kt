@@ -29,27 +29,35 @@ class TaskDisplayFragment :
     private val adapterInstance = FoldListAdapter(foldData)
 
     // 注册一个ActivityFinishedForResult
+    // 进入EditTaskActivity, 有两种情况, 新建和修改 task
     private var launcher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result: ActivityResult ->
         if (result.resultCode == Activity.RESULT_OK) {
-            // to do
+            postToDB()
         }
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initDatas()
+        // 新建 父级task
         addMore.setOnClickListener {
-            launcher.launch(Intent(this.context, EditTaskActivity::class.java))
+            Intent(this.context, EditTaskActivity::class.java).let {
+                it.putExtra("mode", "create")
+                launcher.launch(it)
+            }
         }
         binding.taskDisplayList.adapter = adapterInstance
     }
 
 
     private fun initDatas() {
+        postToDB()
+    }
 
+    // 向数据库请求数据
+    fun postToDB() {
         var parentDatas: List<RootTaskData>?
         val poster = RootTaskDatabase.getInstance(requireActivity()).rootTaskDao()
         val getTasks = poster.getAllParentTask()
@@ -57,33 +65,39 @@ class TaskDisplayFragment :
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 // 处理正常情况下的订阅事件
-                parentDatas = it
-                parentDatas?.apply {
-                    foldData.clear()
-                    for (i in (this as ArrayList<RootTaskData>)) {
-                        val parentBean =
-                            FoldListAdapter.FoldData.ParentBean(
-                                title = i.title.ifBlank { "无标题任务" },
-                                isFinished = i.isFinished
-                            )
-                        val children = ArrayList<FoldListAdapter.FoldData.ChildBean>()
-                        val getChildrenTask = poster.getChildrenTask(i.title)
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe({ kids ->
-                                for (j in kids) {
-                                    val childBean =
-                                        FoldListAdapter.FoldData.ChildBean(
-                                            title = j.title.ifBlank { "无标题子任务" },
-                                            isFinished = j.isFinished
-                                        )
-                                    children.add(childBean)
-                                }
-                                parentBean.children = children
-                            }, {
-                            })
+                if (it.isNotEmpty()) {
+                    parentDatas = it
+                    parentDatas.apply {
+                        foldData.clear()
+                        Log.d("TAG", "postToDB: get there")
+                        for (i in (this as ArrayList<RootTaskData>)) {
+                            val parentBean =
+                                FoldListAdapter.FoldData.ParentBean(
+                                    id = i.id,
+                                    title = i.title.ifBlank { "无标题任务" },
+                                    isFinished = i.isFinished
+                                )
+                            val children = ArrayList<FoldListAdapter.FoldData.ChildBean>()
+                            val getChildrenTask = poster.getChildrenTask(i.id)
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe({ kids ->
+                                    for (j in kids) {
+                                        val childBean =
+                                            FoldListAdapter.FoldData.ChildBean(
+                                                id = j.id,
+                                                title = j.title.ifBlank { "无标题子任务" },
+                                                isFinished = j.isFinished,
+                                                parent = j.parent
+                                            )
+                                        children.add(childBean)
+                                    }
+                                    parentBean.children = children
+                                }, {
+                                })
 
-                        foldData.add(parentBean)
+                            foldData.add(parentBean)
+                        }
                     }
                 }
                 adapterInstance.setNewDatas(foldData)
@@ -91,7 +105,5 @@ class TaskDisplayFragment :
                 // 处理异常情况下的订阅事件
                 Log.e("TAG", "onError: ${it.message}")
             })
-
-
     }
 }

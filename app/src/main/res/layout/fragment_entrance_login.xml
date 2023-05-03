@@ -94,6 +94,7 @@
                 android:id="@+id/account_box"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+
                 android:background="@drawable/bg_translucent_rounded_corners_box"
                 android:drawableStart="@drawable/ic_account_input_24"
                 android:drawablePadding="5dp"
@@ -102,8 +103,7 @@
                 android:imeOptions="actionNext"
                 android:inputType="text"
                 android:paddingVertical="15dp"
-                android:text="@={user.loginAccount}"
-                tools:targetApi="m" />
+                android:text="@={user.loginAccount}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -144,8 +144,7 @@
                 android:maxLines="1"
                 android:paddingVertical="15dp"
                 android:text="@={user.loginPasswd}"
-                android:textColorHint="@color/black"
-                tools:targetApi="m" />
+                android:textColorHint="@color/black" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView

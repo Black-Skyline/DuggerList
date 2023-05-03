@@ -73,4 +73,44 @@ buildFeatures {
 
 3. ##### 在实现登录界面的时，偶尔莫名会发生bug，导致存放注册和登录数据的SharedPreferences会直接崩掉导致内存泄漏？（小黄鸟儿给的提示，猜测可能是AndroidViewModel的初始化格式错了，不小心把activity的实例传进去了？） 
 
-4. ##### 项目期间由于Room版本问题（还有以前builde.gradle文件不规范留下的一些问题），更新了一次AS版本和gradle版本，可能项目源码的兼容性不太好
+4. ##### 项目期间由于Room版本问题（还有以前builde.gradle文件不规范留下的一些问题），换了一个版本新一点的AS并更新了几次gradle版本，可能项目源码的兼容性不太好，目前gradle版本8.0.1(比较低的版本甚至都构建不了，7.2.2版本和7.3版本运行起来也是问题一大堆)
+
+
+
+
+
+##### 更新，目前经过抢修与部分代码重构，（在本人的实体机Android 11 上还是闪退，但报错都是些和系统层面的支持问题了下main是日志中的error信息）
+
+2023-05-04 01:30:08.249 6104-6127/? E/IHansComunication: HANS printMessageBody: RCVed message body: type = 0, port = 86870, caller_pid = 1477, caller_uid = 1000, target_pid = 13846, target_uid = 10264, pkg_cmd = -1
+2023-05-04 01:30:08.250 2481-2481/? E/Launcher.ColorBubbleTextView: mForceHideDot is false
+2023-05-04 01:30:08.251 2481-2481/? E/Launcher.ColorBubbleTextView: mForceHideDot is false
+2023-05-04 01:30:08.325 6819-6845/? E/Parcel: Reading a NULL string not supported here.
+2023-05-04 01:30:08.419 4052-4224/? E/PASe8f28c6220715.PolicyManager: acceptHandleResult, hanleResult is null
+2023-05-04 01:30:08.592 838-891/? E/UxUtility: notifyAppState error = NULL
+2023-05-04 01:30:08.649 3235-3235/? E/oiface: packageSwitch pkg com.oppo.launcher, enter
+2023-05-04 01:30:08.650 3235-3235/? E/oiface: current package is com.oppo.launcher and pid is 2481
+2023-05-04 01:30:08.681 3235-3246/? E/oiface: Average freq 1462370 for 0s.
+2023-05-04 01:30:08.682 3235-3246/? E/oiface: Average freq 1356329 for 0s.
+2023-05-04 01:30:08.682 3235-3246/? E/oiface: Average freq 1607153 for 0s.
+2023-05-04 01:30:08.683 1477-2878/? E/ORMS_Platform : OplusResourceManagerPlatformUtils: readFile function exception:/sys/devices/platform/soc/5000000.qcom,kgsl-3d0/kgsl/kgsl-3d0/freq_table_mhz: open failed: ENOENT (No such file or directory)
+2023-05-04 01:30:08.683 3235-3246/? E/oiface: get gpu freq table failed
+2023-05-04 01:30:08.693 3235-3246/? E/oiface: client  not found, skipped
+2023-05-04 01:30:08.728 3235-3246/? E/oiface: get gpu freq table failed
+2023-05-04 01:30:08.728 1477-2878/? E/ORMS_Platform : OplusResourceManagerPlatformUtils: readFile function exception:/sys/devices/platform/soc/5000000.qcom,kgsl-3d0/kgsl/kgsl-3d0/freq_table_mhz: open failed: ENOENT (No such file or directory)
+2023-05-04 01:30:09.149 779-1102/? E/libnetd_resolv: FwmarkServer connect uid = 10116 addr = 2404:6800:4012:1::200a, port 443
+2023-05-04 01:30:10.177 779-1102/? E/libnetd_resolv: FwmarkServer connect uid = 10116 addr = 2404:6800:4012:2::200a, port 443
+2023-05-04 01:30:11.201 779-1102/? E/libnetd_resolv: FwmarkServer connect uid = 10116 addr = 2404:6800:4012:3::200a, port 443
+2023-05-04 01:30:12.225 779-1102/? E/libnetd_resolv: FwmarkServer connect uid = 10116 addr = 2404:6800:4012:4::200a, port 443
+2023-05-04 01:30:13.003 21667-21667/? E/xample.todolis: Unknown bits set in runtime_flags: 0x40000000
+2023-05-04 01:30:13.027 21667-21667/? E/RefClass: java.lang.reflect.InvocationTargetException
+2023-05-04 01:30:13.244 779-1102/? E/libnetd_resolv: FwmarkServer connect uid = 10116 addr = ::ffff:172.217.163.42, port 443
+2023-05-04 01:30:14.268 779-1102/? E/libnetd_resolv: FwmarkServer connect uid = 10116 addr = ::ffff:142.251.42.234, port 443
+2023-05-04 01:30:15.293 779-1102/? E/libnetd_resolv: FwmarkServer connect uid = 10116 addr = ::ffff:172.217.160.74, port 443
+2023-05-04 01:30:16.321 779-1102/? E/libnetd_resolv: FwmarkServer connect uid = 10116 addr = ::ffff:142.251.43.10, port 443
+2023-05-04 01:30:17.278 819-1126/? E/hwcomposer: [DRMDEV] failed to drmWaitVBlank with dpy_0: -1  
+2023-05-04 01:30:19.572 819-1126/? E/hwcomposer: [DRMDEV] failed to drmWaitVBlank with dpy_0: -1  
+2023-05-04 01:30:23.491 819-1126/? E/hwcomposer: [DRMDEV] failed to drmWaitVBlank with dpy_0: -1  
+2023-05-04 01:30:26.649 819-1126/? E/hwcomposer: [DRMDEV] failed to drmWaitVBlank with dpy_0: -1  
+2023-05-04 01:30:26.650 819-1126/? E/hwcomposer: [DRMDEV] failed to drmWaitVBlank with dpy_0: -1  
+
+而且很神奇的是我同学的Android 11和 虚拟机就没问题……

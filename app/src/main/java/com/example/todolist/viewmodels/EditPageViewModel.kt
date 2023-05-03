@@ -8,48 +8,44 @@ import com.example.todolist.model.dao.RootTaskDao
 import com.example.todolist.model.db.RootTaskDatabase
 import com.example.todolist.model.entity.RootTaskData
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.core.SingleObserver
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 
 
 class EditPageViewModel : ViewModel() {
-    private var title: String? = null           // 标题
-    private var description: String? = null     // 描述
-    private var isFinished: Boolean = false     // 是否完成
-    private var setupTime: String? = null       // 设定的目标时间
-    private var category: String = "default"    // 类别 不同的list中
-    private var parent: String = " this"         // 任务所属的父任务，this表示自己就是父任务
+    private var id: Long = -1
+    private var title: String = "默认任务"         // 标题
+    private var description: String = "无描述"    // 描述
+    private var isFinished: Boolean = false      // 是否完成
+    //    private var setupTime: String = null       // 设定的目标时间
+    private var category: String = "default"     // 类别 不同的list中
+    private var parent: Long = -1                // 任务所属的父任务，this表示自己就是父任务
     private val foldData = ArrayList<FoldListAdapter.FoldData>()
     fun saveEditData(poster: RootTaskDao) {
-        if (title!!.isBlank() && description!!.isBlank()) {
+        if (title.isBlank() && description.isBlank()) {
             return
         }
-
         val task = RootTaskData()
-        if (title!!.isNotBlank()) {
-            task.title = title!!
+        if (title.isNotBlank()) {
+            task.title = title
         }
-        if (description!!.isNotBlank()) {
-            task.description = description!!
+        if (description.isNotBlank()) {
+            task.description = description
         }
-
-        if (isFinished) {
-            task.isFinished = true
-        }
-        setupTime?.let {
-            task.setupTime = it
-        }
-
-        task.category = category
         task.parent = parent
+        task.isFinished = isFinished
+
+//        setupTime?.let {
+//            task.setupTime = it
+//        }
+//        task.category = category
 
         poster.insertTask(task)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSuccess {
-                Log.d("tag", "保存成功路线")
+                Log.d("tag", "Next保存成功")
             }
             .subscribe(object : SingleObserver<Long> {
                 override fun onSubscribe(d: Disposable) {
@@ -81,10 +77,11 @@ class EditPageViewModel : ViewModel() {
                         val parentBean =
                             FoldListAdapter.FoldData.ParentBean(
                                 title = i.title,
-                                isFinished = i.isFinished
+                                isFinished = i.isFinished,
+                                id = i.id
                             )
                         val children = ArrayList<FoldListAdapter.FoldData.ChildBean>()
-                        val getChildrenTask = poster.getChildrenTask(i.title)
+                        val getChildrenTask = poster.getChildrenTask(i.id)
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe({ kids ->
@@ -92,7 +89,9 @@ class EditPageViewModel : ViewModel() {
                                     val childBean =
                                         FoldListAdapter.FoldData.ChildBean(
                                             title = j.title.ifBlank { "无标题子任务" },
-                                            isFinished = j.isFinished
+                                            isFinished = j.isFinished,
+                                            id = j.id,
+                                            parent = j.parent
                                         )
                                     children.add(childBean)
                                 }
@@ -109,6 +108,9 @@ class EditPageViewModel : ViewModel() {
         return foldData
     }
 
+    fun setId(id: Long) {
+        this.id = id
+    }
 
     fun setTitle(text: String) {
         title = text
@@ -122,15 +124,45 @@ class EditPageViewModel : ViewModel() {
         isFinished = value
     }
 
-    fun setupTime(time: String) {
-        setupTime = time
-    }
+//    fun setupTime(time: String) {
+//        setupTime = time
+//    }
 
     fun setCategory(choice: String) {
         category = choice
     }
 
-    fun setParent(params: String) {
+    fun setParent(params: Long) {
         parent = params
     }
+
+    fun updateTaskData(poster: RootTaskDao) {
+        if (id.toInt() != -1) {
+            if (title.isBlank() && description.isBlank()) {
+                return
+            }
+            val task = RootTaskData(id, isFinished = isFinished, parent = parent)
+            if (title.isNotBlank()) {
+                task.title = title
+            }
+            if (description.isNotBlank()) {
+                task.description = description
+            }
+
+//        setupTime?.let {
+//            task.setupTime = it
+//        }
+//            task.category = category
+            val update = poster.updateTask(task)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    Log.d("tag", "updateTaskData: update成功")
+                }, {
+                    Log.d("tag", "updateTaskData: update失败")
+                })
+        }
+    }
+
+
 }

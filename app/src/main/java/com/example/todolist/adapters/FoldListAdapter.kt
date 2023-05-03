@@ -1,7 +1,7 @@
 package com.example.todolist.adapters
 
+import android.content.Intent
 import android.graphics.Color
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +14,8 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.drawerlayout.widget.DrawerLayout.DrawerListener
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todolist.R
+import com.example.todolist.activities.EditTaskActivity
+import com.example.todolist.viewmodels.EditPageViewModel
 
 /*
 * 在 RecyclerView 的 Adapter 中，您需要定义两个 ViewHolder 类型：HeaderViewHolder 和 ChildViewHolder。
@@ -41,6 +43,7 @@ class FoldListAdapter(private var data: List<FoldData>) :
         const val TYPE_PARENT = 0x001
         const val TYPE_CHILD = 0x002
     }
+
     fun setNewDatas(new: List<FoldData>) {
         data = new
         notifyDataSetChanged()
@@ -51,12 +54,15 @@ class FoldListAdapter(private var data: List<FoldData>) :
             var title: String,
             var isExpand: Boolean = false,
             var isFinished: Boolean = false,
-            var children: List<ChildBean>? = null
+            var children: List<ChildBean>? = null,
+            val id: Long
         ) : FoldData(TYPE_PARENT)
 
         data class ChildBean(
             var title: String,
-            var isFinished: Boolean = false
+            var isFinished: Boolean = false,
+            val id: Long,
+            val parent: Long
         ) : FoldData(TYPE_CHILD)
     }
 
@@ -129,6 +135,18 @@ class FoldListAdapter(private var data: List<FoldData>) :
         private val top = itemView.findViewById<Button>(R.id.task_sticky_view)
 
         init {
+            contentView.setOnClickListener {
+                // 跳转Edit界面
+                contentView.context.let {
+                    val intent = Intent(it, EditTaskActivity::class.java)
+                    intent.putExtra("mode", "change")
+                    intent.putExtra("isFinished", (data[adapterPosition] as FoldData.ChildBean).isFinished)
+                    intent.putExtra("id", (data[adapterPosition] as FoldData.ChildBean).id)
+                    intent.putExtra("title", (data[adapterPosition] as FoldData.ChildBean).title)
+                    intent.putExtra("parent", (data[adapterPosition] as FoldData.ChildBean).parent)
+                    it.startActivity(intent)
+                }
+            }
             childDrawer.setScrimColor(Color.TRANSPARENT)
             childDrawer.addDrawerListener(object : DrawerListener {
                 override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
