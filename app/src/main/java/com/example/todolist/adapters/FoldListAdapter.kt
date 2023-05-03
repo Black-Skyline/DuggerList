@@ -1,10 +1,17 @@
 package com.example.todolist.adapters
 
+import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
+import androidx.drawerlayout.widget.DrawerLayout
+import androidx.drawerlayout.widget.DrawerLayout.DrawerListener
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todolist.R
 
@@ -28,21 +35,29 @@ import com.example.todolist.R
 
 
 // 可折叠展示列表的adapter
-class FoldListAdapter(private val data: List<FoldData>) :
+class FoldListAdapter(private var data: List<FoldData>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     companion object {
         const val TYPE_PARENT = 0x001
         const val TYPE_CHILD = 0x002
+    }
+    fun setNewDatas(new: List<FoldData>) {
+        data = new
+        notifyDataSetChanged()
     }
 
     sealed class FoldData(val type: Int) {
         data class ParentBean(
             var title: String,
             var isExpand: Boolean = false,
+            var isFinished: Boolean = false,
             var children: List<ChildBean>? = null
         ) : FoldData(TYPE_PARENT)
 
-        data class ChildBean(var title: String) : FoldData(TYPE_CHILD)
+        data class ChildBean(
+            var title: String,
+            var isFinished: Boolean = false
+        ) : FoldData(TYPE_CHILD)
     }
 
     sealed class Holder(root: View) : RecyclerView.ViewHolder(root)
@@ -51,6 +66,7 @@ class FoldListAdapter(private val data: List<FoldData>) :
     inner class ParentHolder(itemView: View) : Holder(itemView) {
         private val titleView = itemView.findViewById<TextView>(R.id.parent_task_title)
         private val isExpand = itemView.findViewById<ImageView>(R.id.parent_task_state)
+        private val isFinished = itemView.findViewById<CheckBox>(R.id.parent_is_finished_state)
 
         init {
             itemView.setOnClickListener {
@@ -74,19 +90,23 @@ class FoldListAdapter(private val data: List<FoldData>) :
 
         private fun closeItem(position: Int) {
             (data[position] as FoldData.ParentBean).children?.let {
-                (data as ArrayList<FoldData>).removeAll(it)
-//                notifyItemRangeRemoved(position + 1, it.size)
-//                notifyItemRangeChanged(position + 1, it.size)
-                notifyDataSetChanged()
+                val arr = (data as ArrayList<FoldData>)
+                for (i in it.size downTo 1) {
+                    arr.removeAt(position + i)
+                }
+
+                notifyItemRangeRemoved(position + 1, it.size)
+                notifyItemRangeChanged(position + 1, it.size)
+//                notifyDataSetChanged()
             }
         }
 
         private fun expandItem(position: Int) {
             (data[position] as FoldData.ParentBean).children?.let {
                 (data as ArrayList<FoldData>).addAll(position + 1, it)
-//                notifyItemRangeInserted(position + 1, it.size)
-//                notifyItemRangeChanged(position + 1, it.size)
-                notifyDataSetChanged()
+                notifyItemRangeInserted(position + 1, it.size)
+                notifyItemRangeChanged(position + 1, it.size)
+//                notifyDataSetChanged()
             }
         }
 
@@ -94,14 +114,51 @@ class FoldListAdapter(private val data: List<FoldData>) :
             titleView.text = task.title
             // 旋转parentView的箭头
             isExpand.rotation = if (task.isExpand) 0f else 90f
+            isFinished.isChecked = task.isFinished
         }
     }
 
     inner class ChildHolder(itemView: View) : Holder(itemView) {
+        private val childDrawer = itemView.findViewById<DrawerLayout>(R.id.child_drawer_layout)
+        private val contentView = itemView.findViewById<CardView>(R.id.child_content_view)
+
         private val titleView = itemView.findViewById<TextView>(R.id.child_task_title)
+        private val isFinished = itemView.findViewById<CheckBox>(R.id.parent_is_finished_state)
+
+        private val delete = itemView.findViewById<Button>(R.id.task_delete_view)
+        private val top = itemView.findViewById<Button>(R.id.task_sticky_view)
+
+        init {
+            childDrawer.setScrimColor(Color.TRANSPARENT)
+            childDrawer.addDrawerListener(object : DrawerListener {
+                override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
+                    contentView.translationX = (-(drawerView.measuredWidth) * slideOffset)
+                }
+
+                override fun onDrawerOpened(drawerView: View) {
+
+                }
+
+                override fun onDrawerClosed(drawerView: View) {
+
+                }
+
+                override fun onDrawerStateChanged(newState: Int) {
+
+                }
+
+            })
+            top.setOnClickListener {
+
+            }
+            delete.setOnClickListener {
+
+            }
+        }
 
         fun bind(task: FoldData.ChildBean, position: Int) {
             titleView.text = task.title
+            isFinished.isChecked = task.isFinished
         }
     }
 
@@ -118,11 +175,11 @@ class FoldListAdapter(private val data: List<FoldData>) :
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-
         when (holder) {
             is ParentHolder -> {
                 holder.bind(data[position] as FoldData.ParentBean, position)
             }
+
             is ChildHolder -> {
                 holder.bind(data[position] as FoldData.ChildBean, position)
             }

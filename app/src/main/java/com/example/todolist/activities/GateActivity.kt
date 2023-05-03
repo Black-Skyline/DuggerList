@@ -1,11 +1,17 @@
 package com.example.todolist.activities
 
+import android.app.Activity
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.example.todolist.R
+import com.example.todolist.adapters.FoldListAdapter
 import com.example.todolist.adapters.GateVpFragmentAdapter
 import com.example.todolist.adapters.LazyCreateFragment
 import com.example.todolist.databinding.ActivityGateBinding
@@ -15,11 +21,17 @@ import com.example.todolist.fragments.gate.SimpleSearchFragment
 import com.example.todolist.fragments.gate.TaskDisplayFragment
 import com.example.todolist.viewmodels.GateViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-class GateActivity : AppCompatActivity() {
+/**
+ * @author: workDog
+ * @description: 这是用于展示基础功能的门口Activity，目前的设想是把该activity作为连接各功能快的”中转站“
+ */
+class GateActivity : BaseActivity() {
     private val viewBinding by lazy { ActivityGateBinding.inflate(layoutInflater) }
     private val gateVP2: ViewPager2 get() = viewBinding.gateFragmentsVp
     private val naviView: BottomNavigationView get() = viewBinding.gateBottomNavi
+
     private val childFragmentList = ArrayList<LazyCreateFragment>()
     private val viewModel by lazy { ViewModelProvider(this)[GateViewModel::class.java] }
 
@@ -44,6 +56,7 @@ class GateActivity : AppCompatActivity() {
         }
         gateVP2.adapter = GateVpFragmentAdapter(this, childFragmentList)
         gateVP2.isUserInputEnabled = false
+
     }
 
     private fun initDatas() {

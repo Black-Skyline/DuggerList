@@ -22,6 +22,22 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.2" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_add_more"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="36dp"
+        android:elevation="@dimen/dp_size_5"
+        android:focusable="true"
+        android:src="@drawable/icon_fab_more_action"
+        app:fabCustomSize="70dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:maxImageSize="70dp"
+        app:pressedTranslationZ="@dimen/dp_size_18" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/task_display_list"
         android:layout_width="match_parent"
@@ -31,5 +47,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline2" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

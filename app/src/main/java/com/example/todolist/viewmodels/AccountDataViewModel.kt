@@ -32,7 +32,6 @@ class AccountDataViewModel(application: Application, private val handle: SavedSt
     AndroidViewModel(application) {
 
     private val mApplication get() = getApplication<Application>()
-
     private val isRememberPasswdKey = mApplication.resources.getString(R.string.remember_passwd_key)
     private val accountKey = mApplication.resources.getString(R.string.account_key)
     private val passwordKey = mApplication.resources.getString(R.string.password_data_key)
@@ -140,6 +139,7 @@ class AccountDataViewModel(application: Application, private val handle: SavedSt
             handle[isRememberPasswdKey] = _isRememberPasswd
             saveSent(isRememberPasswdKey, switch = getIsRememberPasswdValue())
         }
+
         accountKey -> saveSent(accountKey, value = getAccountValue())
         passwordKey -> saveSent(passwordKey, value = getPasswordValue())
         else -> false
@@ -182,15 +182,19 @@ class AccountDataViewModel(application: Application, private val handle: SavedSt
     // 用当前handler里的数据 对登陆界面输入的登录数据(UI data)检查
     // 返回检查是否通过的结果
     fun loginCheck(): Boolean {
-        if (getAccountValue() == _loginAccount) {
-            if (getPasswordValue() == _loginPassword)
-                return true
-            else Toast.makeText(
-                mApplication,
-                "e u-o-u, 密码好像输错了呢~",
-                Toast.LENGTH_SHORT
-            ).show()
-        } else Toast.makeText(mApplication, "这个账号达咩哒~~~", Toast.LENGTH_SHORT).show()
+        updateHandlerAllData()
+        if (getAccountValue().isNotBlank() && getPasswordValue().isNotBlank()) {
+            if (getAccountValue() == _loginAccount) {
+                if (getPasswordValue() == _loginPassword)
+                    return true
+                else Toast.makeText(
+                    mApplication,
+                    "e u-o-u, 密码好像输错了呢~",
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else Toast.makeText(mApplication, "这个账号达咩哒~~~", Toast.LENGTH_SHORT).show()
+        } else Toast.makeText(mApplication, "请输入账号密码", Toast.LENGTH_SHORT).show()
+
         return false
     }
 
@@ -207,13 +211,13 @@ class AccountDataViewModel(application: Application, private val handle: SavedSt
                                 Toast.makeText(
                                     mApplication, "注册失败!请重新注册……", Toast.LENGTH_SHORT
                                 ).show()
-                        } else Toast.makeText(getApplication(), "密码不一致", Toast.LENGTH_SHORT).show()
-                    } else Toast.makeText(getApplication(), "请设置密码！", Toast.LENGTH_SHORT).show()
+                        } else Toast.makeText(getApplication(), "密码不一致", Toast.LENGTH_SHORT)
+                            .show()
+                    } else Toast.makeText(getApplication(), "请设置密码！", Toast.LENGTH_SHORT)
+                        .show()
                 } else Toast.makeText(getApplication(), "账号不能为空！", Toast.LENGTH_SHORT).show()
             }
-            R.id.back_login_page -> {
-                Toast.makeText(mApplication, "Login success!!", Toast.LENGTH_SHORT).show()
-            }
+
             else -> {
 
             }

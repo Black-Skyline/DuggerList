@@ -40,7 +40,10 @@ class RegisterFragment : Fragment() {
             user = viewModel.getDatas()
             lifecycleOwner = this@RegisterFragment
             mBinding.backLoginPage.setOnClickListener {
-                this@RegisterFragment.viewModel.clearLiveData()
+                this@RegisterFragment.viewModel.let {
+                    it.clearLiveData()
+//                    it.updateHandlerAllData()
+                }
                 val manager = requireActivity().supportFragmentManager
                 val transaction = manager.beginTransaction()
 

@@ -77,7 +77,6 @@
             android:id="@+id/regis_text_1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@color/white"
             android:paddingStart="15dp"
             android:paddingEnd="25dp"
             android:textColorHint="@color/black"

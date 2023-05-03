@@ -10,9 +10,6 @@ import com.example.todolist.fragments.entrance.LoginFragment
  */
 class EntranceActivity : BaseActivity() {
 
-    companion object {
-        const val BACK_STACK_ROOT_TAG = "entrance_fragment_stack"
-    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_entrance)
