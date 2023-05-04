@@ -10,11 +10,10 @@
         android:id="@+id/parent_is_finished_state"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.5" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/parent_task_title"
@@ -23,10 +22,22 @@
         android:gravity="center"
         android:textSize="@dimen/sp_size_25"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/create_child_task"
+        app:layout_constraintStart_toEndOf="@+id/parent_is_finished_state"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.521"
         tools:text="this is a parent_task" />
+
+    <ImageView
+        android:id="@+id/create_child_task"
+        android:layout_width="38dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="24dp"
+        android:src="@drawable/icon_add_button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/parent_task_state"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.607" />
 
     <ImageView
         android:id="@+id/parent_task_state"

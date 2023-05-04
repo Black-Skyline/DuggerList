@@ -20,19 +20,18 @@ import com.example.todolist.viewmodels.EditPageViewModel
 /*
 * 在 RecyclerView 的 Adapter 中，您需要定义两个 ViewHolder 类型：HeaderViewHolder 和 ChildViewHolder。
 * 在调用 onCreateViewHolder() 时，需要根据 ViewGroup的类型判断当前 View 是 Header 还是 Child ，并返回相应的 ViewHolder。
-* 对于 HeaderViewHolder，只需返回相应的视图即可（例如布局文件中的 LinearLayout、TextView等）。
+* 对于 ParentViewHolder，只需返回相应的视图即可（例如布局文件中的 LinearLayout、TextView等）。
 * 对于 ChildViewHolder，需要将子项数据适配到对应的视图，并在需要时添加单击事件处理器。
 * getChildCount() 返回每个 Header 对应的 Child 项数目；getGroupCount() 则返回 Header 数量。
-* 如果希望实现折叠/展开样式，则需要为 Header 添加一个点击侦听器，并设置 isChecked 变量以标记相关节点是否已折叠或展开。
+* 如果希望实现折叠/展开样式，则需要为 Header 添加一个点击侦听器，并设置 isExpand 变量以标记相关节点是否已折叠或展开。
 * 在折叠状态下，childViewCount 被视为 0.
 * onBindViewHolder() 方法中，需要将数据适配到每个 ViewHolder 对应的视图中。
 * 用一个 List<Object> 类型的变量来存储您所有的 Header 和 Child 数据
 * 在构造方法中对数据进行分组，以便适配器知道哪些项目是 Header 并将相应的 Child 添加到列表视图中。
 * getItemViewType() 方法需要返回不同的值才能区分当前视图是否为 Header 或 Child。
-* 例如，在此方法中您可以使用 instanceof 操作符检查当前项是否为 Header 类型，并返回不同的类型号，
 * 这样 onCreateViewHolder() 就能够正确地创建不同的 ViewHolder。
 * 使用 notifyItemInserted()、notifyDataSetChanged() 等 RecyclerView.Adapter 的通知函数进行数据操作时，
-* 需要注意考虑 Header 和 Child 的位置。
+* 需要注意考虑 Header 和 Child 的position保持和dataList中一致
 * */
 
 
@@ -67,10 +66,9 @@ class FoldListAdapter(private var data: List<FoldData>) :
     }
 
     sealed class Holder(root: View) : RecyclerView.ViewHolder(root)
-
-
     inner class ParentHolder(itemView: View) : Holder(itemView) {
         private val titleView = itemView.findViewById<TextView>(R.id.parent_task_title)
+        private val addChild = itemView.findViewById<ImageView>(R.id.create_child_task)
         private val isExpand = itemView.findViewById<ImageView>(R.id.parent_task_state)
         private val isFinished = itemView.findViewById<CheckBox>(R.id.parent_is_finished_state)
 
@@ -90,6 +88,19 @@ class FoldListAdapter(private var data: List<FoldData>) :
                         }
                         notifyItemChanged(currentPosition)
                     }
+                }
+            }
+
+            addChild.setOnClickListener {
+                // 跳转Edit界面 新建 子级task
+                addChild.context.let {
+                    val intent = Intent(it, EditTaskActivity::class.java)
+                    intent.putExtra("mode", "create_task")
+//                    intent.putExtra("isFinished", (data[adapterPosition] as FoldData.ParentBean).isFinished)
+//                    intent.putExtra("id", (data[adapterPosition] as FoldData.ParentBean).id)
+//                    intent.putExtra("title", (data[adapterPosition] as FoldData.ParentBean).title)
+                    intent.putExtra("parent", (data[adapterPosition] as FoldData.ParentBean).id)
+                    it.startActivity(intent)
                 }
             }
         }
@@ -129,24 +140,28 @@ class FoldListAdapter(private var data: List<FoldData>) :
         private val contentView = itemView.findViewById<CardView>(R.id.child_content_view)
 
         private val titleView = itemView.findViewById<TextView>(R.id.child_task_title)
-        private val isFinished = itemView.findViewById<CheckBox>(R.id.parent_is_finished_state)
+        private val isFinished = itemView.findViewById<CheckBox>(R.id.child_is_finished_state)
 
         private val delete = itemView.findViewById<Button>(R.id.task_delete_view)
         private val top = itemView.findViewById<Button>(R.id.task_sticky_view)
 
         init {
-            contentView.setOnClickListener {
+            titleView.setOnClickListener {
                 // 跳转Edit界面
                 contentView.context.let {
                     val intent = Intent(it, EditTaskActivity::class.java)
                     intent.putExtra("mode", "change")
-                    intent.putExtra("isFinished", (data[adapterPosition] as FoldData.ChildBean).isFinished)
+                    intent.putExtra(
+                        "isFinished",
+                        (data[adapterPosition] as FoldData.ChildBean).isFinished
+                    )
                     intent.putExtra("id", (data[adapterPosition] as FoldData.ChildBean).id)
                     intent.putExtra("title", (data[adapterPosition] as FoldData.ChildBean).title)
                     intent.putExtra("parent", (data[adapterPosition] as FoldData.ChildBean).parent)
                     it.startActivity(intent)
                 }
             }
+
             childDrawer.setScrimColor(Color.TRANSPARENT)
             childDrawer.addDrawerListener(object : DrawerListener {
                 override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
@@ -170,7 +185,10 @@ class FoldListAdapter(private var data: List<FoldData>) :
 
             }
             delete.setOnClickListener {
-
+                (data as ArrayList<FoldData>).removeAt(adapterPosition)
+                notifyItemRemoved(adapterPosition)
+                notifyItemRangeChanged(adapterPosition, 1)
+                childDrawer.closeDrawers()
             }
         }
 

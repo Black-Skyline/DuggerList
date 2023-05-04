@@ -3,6 +3,7 @@ package com.example.todolist.viewmodels
 import android.content.Context
 import android.util.Log
 import androidx.lifecycle.ViewModel
+import androidx.room.Delete
 import com.example.todolist.adapters.FoldListAdapter
 import com.example.todolist.model.dao.RootTaskDao
 import com.example.todolist.model.db.RootTaskDatabase
@@ -18,6 +19,7 @@ class EditPageViewModel : ViewModel() {
     private var title: String = "默认任务"         // 标题
     private var description: String = "无描述"    // 描述
     private var isFinished: Boolean = false      // 是否完成
+
     //    private var setupTime: String = null       // 设定的目标时间
     private var category: String = "default"     // 类别 不同的list中
     private var parent: Long = -1                // 任务所属的父任务，this表示自己就是父任务
@@ -61,6 +63,21 @@ class EditPageViewModel : ViewModel() {
                 }
             })
     }
+
+    fun deleteTask(poster: RootTaskDao) {
+        if (id.toInt() == -1) {
+            return
+        }
+        val delete = poster.deleteById(id)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                Log.d("tag", "deleteTask: delete成功")
+            }, {
+                Log.d("tag", "deleteTask: delete失败")
+            })
+    }
+
 
     fun initDatas(context: Context): ArrayList<FoldListAdapter.FoldData> {
         var parentDatas: List<RootTaskData>?
@@ -139,6 +156,7 @@ class EditPageViewModel : ViewModel() {
     fun updateTaskData(poster: RootTaskDao) {
         if (id.toInt() != -1) {
             if (title.isBlank() && description.isBlank()) {
+                deleteTask(poster)
                 return
             }
             val task = RootTaskData(id, isFinished = isFinished, parent = parent)
@@ -163,6 +181,4 @@ class EditPageViewModel : ViewModel() {
                 })
         }
     }
-
-
 }

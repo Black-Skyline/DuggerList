@@ -8,6 +8,7 @@ import android.view.View
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.todolist.activities.EditTaskActivity
 import com.example.todolist.adapters.FoldListAdapter
 import com.example.todolist.databinding.FragmentTaskDisplayBinding
@@ -48,16 +49,23 @@ class TaskDisplayFragment :
                 launcher.launch(it)
             }
         }
+        binding.taskDisplayList.layoutManager = LinearLayoutManager(this.context)
         binding.taskDisplayList.adapter = adapterInstance
+    }
+
+    override fun onStart() {
+        super.onStart()
+        postToDB()
     }
 
 
     private fun initDatas() {
+//        Log.d("TAG", "initDatas: 更新列表数据")
         postToDB()
     }
 
     // 向数据库请求数据
-    fun postToDB() {
+    private fun postToDB() {
         var parentDatas: List<RootTaskData>?
         val poster = RootTaskDatabase.getInstance(requireActivity()).rootTaskDao()
         val getTasks = poster.getAllParentTask()
@@ -69,7 +77,7 @@ class TaskDisplayFragment :
                     parentDatas = it
                     parentDatas.apply {
                         foldData.clear()
-                        Log.d("TAG", "postToDB: get there")
+//                        Log.d("TAG", "postToDB: get not empty datas")
                         for (i in (this as ArrayList<RootTaskData>)) {
                             val parentBean =
                                 FoldListAdapter.FoldData.ParentBean(
@@ -103,7 +111,7 @@ class TaskDisplayFragment :
                 adapterInstance.setNewDatas(foldData)
             }, {
                 // 处理异常情况下的订阅事件
-                Log.e("TAG", "onError: ${it.message}")
+//                Log.e("TAG", "onError: ${it.message}")
             })
     }
 }

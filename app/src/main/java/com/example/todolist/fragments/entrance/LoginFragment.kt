@@ -37,13 +37,16 @@ class LoginFragment : Fragment(), View.OnClickListener {
 //        get() = _binding!!
 //    _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_entrance_login, container, false)
 
-    private lateinit var binding: FragmentEntranceLoginBinding
+
+    private var _binding: FragmentEntranceLoginBinding? = null
+    private val binding: FragmentEntranceLoginBinding
+        get() = _binding!!
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.setContentView(requireActivity(), R.layout.fragment_entrance_login)
+        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_entrance_login, container, false)
 //        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_entrance_login, container, false)
 //            FragmentEntranceLoginBinding.inflate(inflater)
 
@@ -58,7 +61,7 @@ class LoginFragment : Fragment(), View.OnClickListener {
             inputText1.isCounterEnabled = false
         }
 
-        textChangedListen(binding)
+        textChangedListen()
         this@LoginFragment.viewModel.checkIsRememberPasswd()
         return binding.root
     }
@@ -76,13 +79,13 @@ class LoginFragment : Fragment(), View.OnClickListener {
 //        this@LoginFragment.viewModel.checkIsRememberPasswd()
 //    }
 
-//    override fun onDestroyView() {
-//        super.onDestroyView()
-//        // 假如onDestroyView回调时binding已经调用set方法完成了初始化，就解除绑定
-//        binding = null
-//    }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        // 假如onDestroyView回调时binding已经调用set方法完成了初始化，就解除绑定
+        _binding = null
+    }
 
-    private fun textChangedListen(binding: FragmentEntranceLoginBinding) {
+    private fun textChangedListen() {
         binding.accountBox.addTextChangedListener()
         binding.accountBox.addTextChangedListener(object : BaseTextChangedWatcher() {
             @SuppressLint("UseCompatTextViewDrawableApis", "UseCompatLoadingForDrawables")
@@ -148,14 +151,15 @@ class LoginFragment : Fragment(), View.OnClickListener {
             R.id.login -> {
                 if (viewModel.loginCheck()) {
                     viewModel.updateShp(AccountDataViewModel.getIsRememberPasswdKey())
-                    actionToActivityDoSth(requireActivity(), GateActivity::class.java) {
-                        // 展示过度动画
-                    }
                     val manager = requireActivity().supportFragmentManager
                     manager.findFragmentByTag("登录fragment实例")?.apply {
                         manager.beginTransaction().remove(this).commit()
-                        requireActivity().finish()
+//                        requireActivity().finish()
                     }
+                    actionToActivityDoSth(requireActivity(), GateActivity::class.java) {
+                        // 展示过度动画
+                    }
+
                 }
             }
             R.id.register -> {

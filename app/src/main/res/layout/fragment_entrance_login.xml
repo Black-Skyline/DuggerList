@@ -17,6 +17,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/img"
         android:orientation="vertical"
         tools:viewBindingIgnore="true">
 
@@ -78,11 +79,11 @@
             android:textColorHint="@color/black"
             app:counterEnabled="true"
             app:counterMaxLength="@integer/user_name_Max_length"
-            app:counterTextColor="@color/blue_purple"
+            app:counterTextColor="@color/white"
             app:errorEnabled="true"
             app:helperText="@string/no_account_hint"
             app:helperTextEnabled="true"
-            app:helperTextTextColor="@color/material_dynamic_neutral50"
+            app:helperTextTextColor="@color/white"
             app:hintEnabled="true"
             app:hintTextAppearance="@style/TextAppearance.AppCompat.Medium"
             app:layout_constraintBottom_toTopOf="@+id/guideline2"
@@ -94,7 +95,6 @@
                 android:id="@+id/account_box"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
                 android:background="@drawable/bg_translucent_rounded_corners_box"
                 android:drawableStart="@drawable/ic_account_input_24"
                 android:drawablePadding="5dp"
@@ -115,10 +115,10 @@
             android:textColorHint="@color/black"
             app:counterEnabled="true"
             app:counterMaxLength="@integer/password_Max_length"
-            app:counterTextColor="@color/blue_purple"
+            app:counterTextColor="@color/white"
             app:errorEnabled="true"
             app:errorTextAppearance="@style/Theme.TODOList"
-            app:helperTextTextColor="@color/material_dynamic_neutral30"
+            app:helperTextTextColor="@color/white"
             app:hintEnabled="true"
             app:hintTextAppearance="@style/TextAppearance.AppCompat.Medium"
             app:layout_constraintBottom_toTopOf="@+id/guideline5"
@@ -152,7 +152,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/Login_title_1"
-            android:textColor="@color/cardview_dark_background"
+            android:textColor="@color/cardview_light_background"
             android:textColorHighlight="@color/cardview_light_background"
             android:textSize="40sp"
             app:layout_constraintBottom_toTopOf="@+id/guideline3"
@@ -199,18 +199,18 @@
 
         <CheckBox
             android:id="@+id/remember_password"
-            style="@android:style/Widget.Holo.Light.CompoundButton.CheckBox"
             android:layout_width="100dp"
             android:layout_height="48dp"
+            android:background="@drawable/bg_translucent_rounded_corners_box"
             android:button="@drawable/check_box_style"
             android:checked="@={user.isRememberPasswd}"
             android:text="@string/remember_password"
+            android:textColor="@color/white"
             app:layout_constraintBottom_toTopOf="@+id/guideline11"
             app:layout_constraintEnd_toStartOf="@+id/guideline6"
-            app:layout_constraintHorizontal_bias="0.305"
+            app:layout_constraintHorizontal_bias="0.164"
             app:layout_constraintStart_toStartOf="@+id/guideline7"
-            app:layout_constraintTop_toTopOf="@+id/guideline5"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintTop_toTopOf="@+id/guideline5" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline11"

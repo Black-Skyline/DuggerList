@@ -30,8 +30,11 @@ class EditTaskActivity : BaseActivity() {
 
     // 是否已完成   using
     private val isFinishedBox: CheckBox get() = binding.checkBox
-    private val backGate: Button get() = binding.button
+    private val backGate: Button get() = binding.backButton
+    private val deleteCurrent: Button get() = binding.deleteButton
+
     private lateinit var poster: RootTaskDao
+
     //    // 设定的目标时间  预留后续实现
     //    private val setupTime: TextView get() = binding.editCurrentTime
     //    // 类别 不同的list中 预留后续实现
@@ -44,19 +47,26 @@ class EditTaskActivity : BaseActivity() {
 
         initView()
         intent.apply {
-            if (getStringExtra("mode") == "change") {
-                mode = "change"
-                val id = getLongExtra("id", -1)
-                if (id.toInt() != -1) {
-                    viewModel.setId(id)
-                    getDescriptionById(id)
+            when (getStringExtra("mode")) {
+                "change" -> {
+                    mode = "change"
+                    val id = getLongExtra("id", -1)
+                    if (id.toInt() != -1) {
+                        viewModel.setId(id)
+                        getDescriptionById(id)
+                    }
+
+                    viewModel.setParent(getLongExtra("parent", -1))
+                    title = getStringExtra("title") as String
+                    titleBox.setText(title)
+                    isFinishedBox.isChecked = getBooleanExtra("isFinished", false)
                 }
 
-                viewModel.setParent(getLongExtra("parent", -1))
-                title = getStringExtra("title") as String
-                titleBox.setText(title)
-                isFinishedBox.isChecked = getBooleanExtra("isFinished", false)
+                "create_task" -> {
+                    viewModel.setParent(getLongExtra("parent", 1))
+                }
             }
+
         }
     }
 
@@ -67,9 +77,7 @@ class EditTaskActivity : BaseActivity() {
         // 点击返回按钮时保存数据到数据库
         backGate.setOnClickListener {
             viewModel.setTitle(titleBox.text.toString())
-//            Log.d("TAG", "title: ${titleBox.text.toString()}")
             viewModel.setDescription(contentBox.text.toString())
-//            Log.d("TAG", "content: ${contentBox.text.toString()}")
             if (mode == "change") {
                 viewModel.updateTaskData(poster)
             } else {
@@ -82,17 +90,30 @@ class EditTaskActivity : BaseActivity() {
             setResult(RESULT_OK)
             finish()
         }
+        // 点击删除按钮时在数据库删除当前按钮
+        deleteCurrent.setOnClickListener {
+            viewModel.setTitle(titleBox.text.toString())
+            viewModel.setDescription(contentBox.text.toString())
+            viewModel.deleteTask(poster)
+//            viewModel.setupTime()
+//            viewModel.setParent()
+//            viewModel.setCategory()
+            setResult(RESULT_OK)
+            finish()
+        }
     }
 
-    override fun onPause() {
-        super.onPause()
-        viewModel.setTitle(titleBox.text.toString())
-        viewModel.setDescription(contentBox.text.toString())
-
-    }
+//    override fun onPause() {
+//        super.onPause()
+//        viewModel.setTitle(titleBox.text.toString())
+//        viewModel.setDescription(contentBox.text.toString())
+//
+//    }
 
     override fun onBackPressed() {
         super.onBackPressed()
+        viewModel.setTitle(titleBox.text.toString())
+        viewModel.setDescription(contentBox.text.toString())
         if (mode == "change") {
             viewModel.updateTaskData(poster)
         } else {

@@ -23,9 +23,9 @@ class RegisterFragment : Fragment() {
             SavedStateViewModelFactory(requireActivity().application, this)
         )[AccountDataViewModel::class.java]
     }
-    private lateinit var _binding: FragmentEntranceRegisterBinding
+    private var _binding: FragmentEntranceRegisterBinding? = null
     private val mBinding: FragmentEntranceRegisterBinding
-        get() = _binding
+        get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -56,6 +56,11 @@ class RegisterFragment : Fragment() {
         }
         textChangedListen()
         return mBinding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
 //    下面是对DataBinding的封装后在fragment中的简单写法

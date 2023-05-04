@@ -28,6 +28,9 @@ interface RootTaskDao {
     @Delete
     fun deleteTask(task: RootTaskData): Maybe<Int>
 
+    @Query("DELETE FROM RootTasks WHERE id = :id")
+    fun deleteById(id: Long): Maybe<Int>
+
     /**
      * @return Maybe<Int> 返回删除的条数
      */
@@ -48,9 +51,9 @@ interface RootTaskDao {
 
     @Query("UPDATE RootTasks SET description =:description WHERE id = :id")
     fun updateTaskDescription(id: Long, description: String): Single<Int>
+
     @Query("UPDATE RootTasks SET isFinished =:isFinished WHERE id = :id")
     fun updateTaskDescription(id: Long, isFinished: Boolean): Single<Int>
-
 
 
     /**

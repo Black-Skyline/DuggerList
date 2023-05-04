@@ -28,6 +28,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
  * @description: 这是用于展示基础功能的门口Activity，目前的设想是把该activity作为连接各功能快的”中转站“
  */
 class GateActivity : BaseActivity() {
+    // viewBinding
     private val viewBinding by lazy { ActivityGateBinding.inflate(layoutInflater) }
     private val gateVP2: ViewPager2 get() = viewBinding.gateFragmentsVp
     private val naviView: BottomNavigationView get() = viewBinding.gateBottomNavi
